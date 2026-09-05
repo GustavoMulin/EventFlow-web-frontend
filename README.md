@@ -1,45 +1,47 @@
-# EventFlow-web-frontend
+# EventFlow SPA (frontend)
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 + Vite single-page app for EventFlow. Talks to the Laravel API
+(`../EventFlow-web-back`) over JSON using a **Sanctum bearer token** kept in
+`localStorage`.
 
-## Recommended IDE Setup
+## Stack
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Vue 3 (`<script setup>`, JavaScript), Vue Router, Pinia
+- Vite 8, Tailwind CSS v4
+- axios (`src/lib/api.js`) — injects the bearer token, funnels 401s to a logout
+- ESLint + oxlint + Prettier
 
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Setup
 
 ```sh
 npm install
+cp .env.example .env          # set VITE_API_URL (default http://localhost:8000)
+npm run dev                   # http://localhost:5173
 ```
 
-### Compile and Hot-Reload for Development
+## Scripts
 
-```sh
-npm run dev
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Vite dev server on :5173 |
+| `npm run build` | Production build to `dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | oxlint + eslint (autofix) |
+| `npm run format` | Prettier over `src/` |
+
+## Structure
+
+```
+src/
+  lib/api.js            axios instance + error helpers
+  stores/auth.js        Pinia auth store (token, user, login/register/2FA/...)
+  router/index.js       routes + requiresAuth / guestOnly navigation guards
+  layouts/              GuestLayout (auth pages), AppLayout (nav + logout)
+  components/ui/         UiButton, UiField, UiAlert, UiCard
+  views/
+    auth/               Login, Register, ForgotPassword, ResetPassword, VerifyEmail
+    settings/           Profile (update / delete), Security (password / 2FA)
+    DashboardView.vue   authenticated landing — build EventFlow features here
 ```
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
-# EventFlow-web-frontend
+The API contract is documented in `../EventFlow-web-back/README.md`.
