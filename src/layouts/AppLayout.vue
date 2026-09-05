@@ -1,15 +1,13 @@
 <script setup>
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import UiAlert from '@/components/ui/UiAlert.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
 
 const nav = [
-  { name: 'Dashboard', to: { name: 'dashboard' } },
-  { name: 'Profile', to: { name: 'settings.profile' } },
-  { name: 'Security', to: { name: 'settings.security' } },
+  { name: 'Início', to: { name: 'dashboard' } },
+  { name: 'Perfil', to: { name: 'profile' } },
 ]
 
 async function logout() {
@@ -44,19 +42,13 @@ async function logout() {
             class="rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
             @click="logout"
           >
-            Log out
+            Sair
           </button>
         </div>
       </div>
     </header>
 
     <main class="mx-auto max-w-5xl px-4 py-8">
-      <UiAlert v-if="auth.user && !auth.emailVerified" variant="info" class="mb-6">
-        Your e-mail address is not verified.
-        <RouterLink :to="{ name: 'settings.profile' }" class="font-semibold underline">
-          Resend verification
-        </RouterLink>
-      </UiAlert>
       <slot />
     </main>
   </div>

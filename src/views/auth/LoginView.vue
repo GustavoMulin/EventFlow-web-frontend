@@ -12,28 +12,17 @@ const auth = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 
-const form = reactive({ email: '', password: '', code: '', recovery_code: '' })
+const form = reactive({ email: '', password: '' })
 const errors = ref({})
 const formError = ref('')
 const loading = ref(false)
-const twoFactor = ref(false)
-const useRecoveryCode = ref(false)
 
 async function submit() {
   loading.value = true
   errors.value = {}
   formError.value = ''
   try {
-    const payload = { email: form.email, password: form.password }
-    if (twoFactor.value) {
-      if (useRecoveryCode.value) payload.recovery_code = form.recovery_code
-      else payload.code = form.code
-    }
-    const { twoFactorRequired } = await auth.login(payload)
-    if (twoFactorRequired) {
-      twoFactor.value = true
-      return
-    }
+    await auth.login({ ...form })
     router.push(route.query.redirect?.toString() || { name: 'dashboard' })
   } catch (error) {
     errors.value = validationErrors(error)
@@ -45,64 +34,32 @@ async function submit() {
 </script>
 
 <template>
-  <GuestLayout title="Sign in">
+  <GuestLayout title="Entrar">
     <form class="space-y-4" @submit.prevent="submit">
       <UiAlert v-if="formError" variant="error">{{ formError }}</UiAlert>
 
-      <template v-if="!twoFactor">
-        <UiField
-          v-model="form.email"
-          label="E-mail"
-          type="email"
-          autocomplete="email"
-          required
-          :error="errors.email"
-        />
-        <UiField
-          v-model="form.password"
-          label="Password"
-          type="password"
-          autocomplete="current-password"
-          required
-          :error="errors.password"
-        />
-      </template>
+      <UiField
+        v-model="form.email"
+        label="E-mail"
+        type="email"
+        autocomplete="email"
+        required
+        :error="errors.email"
+      />
+      <UiField
+        v-model="form.password"
+        label="Senha"
+        type="password"
+        autocomplete="current-password"
+        required
+        :error="errors.password"
+      />
 
-      <template v-else>
-        <p class="text-sm text-slate-600 dark:text-slate-400">
-          Enter the code from your authenticator app.
-        </p>
-        <UiField
-          v-if="!useRecoveryCode"
-          v-model="form.code"
-          label="Authentication code"
-          autocomplete="one-time-code"
-          :error="errors.code"
-        />
-        <UiField
-          v-else
-          v-model="form.recovery_code"
-          label="Recovery code"
-          :error="errors.recovery_code"
-        />
-        <button
-          type="button"
-          class="text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
-          @click="useRecoveryCode = !useRecoveryCode"
-        >
-          {{ useRecoveryCode ? 'Use an authentication code' : 'Use a recovery code' }}
-        </button>
-      </template>
-
-      <UiButton type="submit" :loading="loading" class="w-full">Sign in</UiButton>
+      <UiButton type="submit" :loading="loading" class="w-full">Entrar</UiButton>
     </form>
 
     <template #footer>
-      <RouterLink :to="{ name: 'forgot-password' }" class="hover:underline">
-        Forgot your password?
-      </RouterLink>
-      <span class="mx-2">·</span>
-      <RouterLink :to="{ name: 'register' }" class="hover:underline">Create an account</RouterLink>
+      <RouterLink :to="{ name: 'register' }" class="hover:underline">Criar uma conta</RouterLink>
     </template>
   </GuestLayout>
 </template>

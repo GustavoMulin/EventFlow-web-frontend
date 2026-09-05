@@ -4,10 +4,7 @@ import { useAuthStore } from '@/stores/auth'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      redirect: '/dashboard',
-    },
+    { path: '/', redirect: '/dashboard' },
     {
       path: '/login',
       name: 'login',
@@ -21,44 +18,18 @@ const router = createRouter({
       meta: { guestOnly: true },
     },
     {
-      path: '/forgot-password',
-      name: 'forgot-password',
-      component: () => import('@/views/auth/ForgotPasswordView.vue'),
-      meta: { guestOnly: true },
-    },
-    {
-      path: '/reset-password',
-      name: 'reset-password',
-      component: () => import('@/views/auth/ResetPasswordView.vue'),
-      meta: { guestOnly: true },
-    },
-    {
-      path: '/verify-email',
-      name: 'verify-email',
-      component: () => import('@/views/auth/VerifyEmailView.vue'),
-    },
-    {
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('@/views/DashboardView.vue'),
       meta: { requiresAuth: true },
     },
     {
-      path: '/settings/profile',
-      name: 'settings.profile',
+      path: '/profile',
+      name: 'profile',
       component: () => import('@/views/settings/ProfileView.vue'),
       meta: { requiresAuth: true },
     },
-    {
-      path: '/settings/security',
-      name: 'settings.security',
-      component: () => import('@/views/settings/SecurityView.vue'),
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      redirect: '/dashboard',
-    },
+    { path: '/:pathMatch(.*)*', redirect: '/dashboard' },
   ],
 })
 

@@ -33,10 +33,10 @@ async function submit() {
 </script>
 
 <template>
-  <GuestLayout title="Create your account">
+  <GuestLayout title="Criar conta">
     <form class="space-y-4" @submit.prevent="submit">
       <UiAlert v-if="formError" variant="error">{{ formError }}</UiAlert>
-      <UiField v-model="form.name" label="Name" autocomplete="name" required :error="errors.name" />
+      <UiField v-model="form.name" label="Nome" autocomplete="name" required :error="errors.name" />
       <UiField
         v-model="form.email"
         label="E-mail"
@@ -47,7 +47,7 @@ async function submit() {
       />
       <UiField
         v-model="form.password"
-        label="Password"
+        label="Senha"
         type="password"
         autocomplete="new-password"
         required
@@ -55,17 +55,17 @@ async function submit() {
       />
       <UiField
         v-model="form.password_confirmation"
-        label="Confirm password"
+        label="Confirmar senha"
         type="password"
         autocomplete="new-password"
         required
       />
-      <UiButton type="submit" :loading="loading" class="w-full">Create account</UiButton>
+      <UiButton type="submit" :loading="loading" class="w-full">Criar conta</UiButton>
     </form>
 
     <template #footer>
-      Already registered?
-      <RouterLink :to="{ name: 'login' }" class="font-medium hover:underline">Sign in</RouterLink>
+      Já tem conta?
+      <RouterLink :to="{ name: 'login' }" class="font-medium hover:underline">Entrar</RouterLink>
     </template>
   </GuestLayout>
 </template>
