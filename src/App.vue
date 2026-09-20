@@ -10,7 +10,7 @@ const auth = useAuthStore()
     v-if="!auth.ready"
     class="flex min-h-screen items-center justify-center text-sm text-slate-500"
   >
-    Loading…
+    Carregando…
   </div>
   <RouterView v-else />
 </template>

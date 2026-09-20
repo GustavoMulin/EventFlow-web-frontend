@@ -22,7 +22,7 @@ async function submit() {
   formError.value = ''
   try {
     await auth.register({ ...form })
-    router.push({ name: 'dashboard' })
+    router.push({ name: 'eventos' })
   } catch (error) {
     errors.value = validationErrors(error)
     if (!Object.keys(errors.value).length) formError.value = errorMessage(error)

@@ -23,7 +23,7 @@ async function submit() {
   formError.value = ''
   try {
     await auth.login({ ...form })
-    router.push(route.query.redirect?.toString() || { name: 'dashboard' })
+    router.push(route.query.redirect?.toString() || { name: 'eventos' })
   } catch (error) {
     errors.value = validationErrors(error)
     if (!Object.keys(errors.value).length) formError.value = errorMessage(error)
