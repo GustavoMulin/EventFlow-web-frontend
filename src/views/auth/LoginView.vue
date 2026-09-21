@@ -59,7 +59,7 @@ async function submit() {
     </form>
 
     <template #footer>
-      <RouterLink :to="{ name: 'register' }" class="hover:underline">Criar uma conta</RouterLink>
+      <RouterLink :to="{ name: 'registrar' }" class="hover:underline">Criar uma conta</RouterLink>
     </template>
   </GuestLayout>
 </template>
